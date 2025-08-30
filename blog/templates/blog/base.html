@@ -14,7 +14,7 @@
     <nav>
       <ul>
         <li><a href="{% url 'home' %}">Inicio</a></li>
-        <li><a href="{% url 'about' %}">Acerca de mí</a></li>
+        <li><a href="{% url 'about' %}">Acerca del Blog</a></li>
         <li><a href="{% url 'post_list' %}">Posts</a></li>
         {% if user.is_authenticated %}
         <li><a href="{% url 'profile' %}">Hola, {{ user.username }}!</a></li>
