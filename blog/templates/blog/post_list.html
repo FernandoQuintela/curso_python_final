@@ -1,0 +1,24 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+  <h1>Lista de Posts</h1>
+
+  {% for post in posts %}
+    <article style="margin-bottom: 2rem;">
+      <h2>{{ post.title|safe }}</h2>
+      <h4>{{ post.subtitle }}</h4>
+
+      {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width: 100%; height: auto;">
+      {% endif %}
+
+      <div>
+        {{ post.body|safe }}
+      </div>
+
+      <a href="{% url 'post_detail' post.pk %}">Leer más</a>
+    </article>
+  {% empty %}
+    <p>No hay posts publicados todavía.</p>
+  {% endfor %}
+{% endblock %}
