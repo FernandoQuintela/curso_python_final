@@ -72,3 +72,25 @@ footer {
   color: #777;
   font-size: 0.9em;
 }
+
+.messages {
+    list-style-type: none;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+}
+
+.messages li {
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+}
+
+.messages li.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.messages li.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}

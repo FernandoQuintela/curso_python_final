@@ -1,24 +1,28 @@
 {% extends 'blog/base.html' %}
 
+{% block title %}Listado de Posts{% endblock %}
+
 {% block content %}
-  <h1>Lista de Posts</h1>
+<section>
+  <h1>Listado de Posts</h1>
 
-  {% for post in posts %}
-    <article style="margin-bottom: 2rem;">
-      <h2>{{ post.title|safe }}</h2>
-      <h4>{{ post.subtitle }}</h4>
+  {% if user.is_authenticated %}
+    <p><a href="{% url 'post_create' %}">Crear nuevo post</a></p>
+  {% endif %}
 
-      {% if post.image %}
-        <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width: 100%; height: auto;">
-      {% endif %}
-
-      <div>
-        {{ post.body|safe }}
-      </div>
-
-      <a href="{% url 'post_detail' post.pk %}">Leer más</a>
-    </article>
-  {% empty %}
-    <p>No hay posts publicados todavía.</p>
-  {% endfor %}
+  {% if posts %}
+    <ul>
+      {% for post in posts %}
+        <li>
+          <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
+          {% if user.is_authenticated %}
+            - <a href="{% url 'post_edit' post.pk %}">Editar</a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No hay posts para mostrar.</p>
+  {% endif %}
+</section>
 {% endblock %}

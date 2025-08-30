@@ -1,20 +1,37 @@
 {% extends 'blog/base.html' %}
 
+{% block title %}{{ post.title }}{% endblock %}
+
 {% block content %}
-  <section>
-    <article style="padding: 1rem; border-bottom: 1px solid #ccc;">
-      <h1>{{ post.title }}</h1>
-      <h3>{{ post.subtitle }}</h3>
+<section>
+  <article style="padding: 1rem; border-bottom: 1px solid #ccc;">
+    <h1>{{ post.title }}</h1>
+    <h3>{{ post.subtitle }}</h3>
 
-      {% if post.image %}
-        <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width: 100%; height: auto;">
-      {% endif %}
+    {% if post.image %}
+    <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width: 100%; height: auto;">
+    {% endif %}
 
-      <div>
-        {{ post.content|safe }}
-      </div>
+    <div>
+      {{ post.content|safe }}
+    </div>
 
-      <p>Publicado el {{ post.created_at|date:"d M Y" }}</p>
-    </article>
-  </section>
+    <p>Publicado el {{ post.created_at|date:"d M Y" }}</p>
+
+    {% if user.is_authenticated and user == post.author %}
+    <p>
+      <a href="{% url 'post_edit' post.pk %}">Editar</a>
+      <span style="margin: 0 10px;">|</span>
+    <form action="{% url 'post_delete' post.pk %}" method="post" style="display:inline;">
+      {% csrf_token %}
+      <button type="submit" onclick="return confirm('¿Estás seguro de eliminar este post?');">
+        Eliminar
+      </button>
+    </form>
+    </p>
+    {% endif %}
+
+    <p><a href="{% url 'post_list' %}">Volver al listado de posts</a></p>
+  </article>
+</section>
 {% endblock %}

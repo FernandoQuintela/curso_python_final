@@ -1,12 +1,14 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title>{% block title %}Mi Blog{% endblock %}</title>
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
   {% block extra_head %}{% endblock %}
 </head>
+
 <body>
   <header>
     <nav>
@@ -15,15 +17,26 @@
         <li><a href="{% url 'about' %}">Acerca de mí</a></li>
         <li><a href="{% url 'post_list' %}">Posts</a></li>
         {% if user.is_authenticated %}
-          <li><a href="{% url 'profile' %}">Perfil</a></li>
-          <li><a href="{% url 'logout' %}">Logout</a></li>
+        <li><a href="{% url 'profile' %}">Hola, {{ user.username }}!</a></li>
+        <li><a href="{% url 'inbox' %}">Inbox</a></li>
+        <li><a href="{% url 'send_message' %}">Enviar mensaje</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
         {% else %}
-          <li><a href="{% url 'login' %}">Login</a></li>
-          <li><a href="{% url 'signup' %}">Registrarse</a></li>
+        <li><a href="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'signup' %}">Registrarse</a></li>
         {% endif %}
       </ul>
     </nav>
+
   </header>
+
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+    <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
 
   <main class="contenido-principal">
     {% block content %}{% endblock %}
@@ -32,5 +45,18 @@
   <footer>
     <p>&copy; {{ now|date:"Y" }} - Mi Blog creado por Fernando</p>
   </footer>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const messages = document.querySelectorAll(".messages li");
+      messages.forEach((msg) => {
+        setTimeout(() => {
+          msg.style.transition = "opacity 1s ease-out";
+          msg.style.opacity = "0";
+          setTimeout(() => msg.remove(), 1000);
+        }, 5000);
+      });
+    });
+  </script>
 </body>
+
 </html>

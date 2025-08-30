@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<h2>Bandeja de entrada</h2>
+<ul>
+  {% for msg in messages %}
+    <li>De: {{ msg.sender.username }} - {{ msg.body }} ({{ msg.created_at }})</li>
+  {% empty %}
+    <li>No tienes mensajes recibidos.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
