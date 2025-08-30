@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
+*.log
+*.pot
+*.pyc
 
 # Virtual env
 env/
@@ -11,10 +14,18 @@ ENV/
 
 # SQLite
 db.sqlite3
+*.sqlite3
 
 # Media uploads
-media/
+/media/
+/media
+/media/*
+/media/**/*
 
 # IDEs
 .vscode/
 .idea/
+
+.DS_Store
+*.egg-info
+/staticfiles/
